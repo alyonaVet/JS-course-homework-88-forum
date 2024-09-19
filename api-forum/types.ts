@@ -12,3 +12,11 @@ export interface UserMethods {
 }
 
 export type UserModel = Model<UserFields, {}, UserMethods>
+
+export interface PostFields {
+  user: string;
+  title: string;
+  datetime: string;
+  description: string | null;
+  image: string | null;
+}
