@@ -56,7 +56,7 @@ const Register = () => {
           alignItems: 'center',
         }}
       >
-        <Avatar sx={{m: 1, backgroundColor: 'secondary.main'}}>
+        <Avatar sx={{m: 1, backgroundColor: '#448aff'}}>
           <LockOutlinedIcon/>
         </Avatar>
         <Typography variant="h5" component="h1" textAlign="center" gutterBottom>
@@ -88,7 +88,7 @@ const Register = () => {
           fullWidth
         />
 
-        <Button type="submit" variant="contained" sx={{mt: 2, backgroundColor: '#8e44ad'}} fullWidth>
+        <Button type="submit" variant="contained" sx={{mt: 2, backgroundColor: '#448aff'}} fullWidth>
           Sign up
         </Button>
         <Typography variant="body2" color="text.secondary" sx={{mt: 2}}>
