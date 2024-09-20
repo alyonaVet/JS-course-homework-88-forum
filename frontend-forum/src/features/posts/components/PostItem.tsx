@@ -3,6 +3,7 @@ import {Box, Card, CardContent, CardMedia, Link, Stack, styled, Typography} from
 import {apiURL} from '../../../constants';
 import dayjs from 'dayjs';
 import {Link as RouterLink} from 'react-router-dom';
+import ForumOutlinedIcon from '@mui/icons-material/ForumOutlined';
 
 interface Props {
   user: string;
@@ -29,7 +30,23 @@ const PostItem: React.FC<Props> = ({user, title, image, datetime}) => {
       mb: 4,
     }}>
       <Box sx={{display: 'flex', flexDirection: 'row', width: '100%'}}>
-        {image && <ImageCardMedia image={cardImage}/>}
+        {image ? (
+          <ImageCardMedia image={cardImage} />
+        ) : (
+          <Box
+            sx={{
+              width: 230,
+              height: '100%',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              backgroundColor: '#fafafa',
+              borderRight: '1px solid #bdbdbd',
+            }}
+          >
+            <ForumOutlinedIcon  sx={{ fontSize: 150 }} color="action" />
+          </Box>
+        )}
         <Box sx={{display: 'flex', flexDirection: 'column', flex: 1}}>
           <CardContent sx={{backgroundColor: '#fafafa', height: '100%'}}>
             <Stack direction={'row'} mb={3}  ml={3}>
@@ -43,7 +60,6 @@ const PostItem: React.FC<Props> = ({user, title, image, datetime}) => {
             <Link component={RouterLink} to={'/posts/:postId'} variant="h6" noWrap ml={3}>
               {title}
             </Link>
-
           </CardContent>
         </Box>
       </Box>
