@@ -1,13 +1,14 @@
 import {useAppDispatch, useAppSelector} from '../../../app/hooks';
-import {selectPosts} from '../postsSlice';
+import {selectPosts, selectPostsLoading} from '../postsSlice';
 import {useEffect} from 'react';
 import {fetchAllPosts} from '../postsThunk';
-import {Container} from '@mui/material';
+import {Box, CircularProgress, Container} from '@mui/material';
 import PostItem from './PostItem';
 
 const Posts = () => {
   const dispatch = useAppDispatch();
   const posts = useAppSelector(selectPosts);
+  const isLoading = useAppSelector(selectPostsLoading);
 
   useEffect(() => {
     dispatch(fetchAllPosts());
@@ -15,16 +16,22 @@ const Posts = () => {
 
   return (
     <Container maxWidth="sm" sx={{mt: 5}}>
-      {posts.map((post) => (
-        <PostItem
-          key={post._id}
-          id={post._id}
-          title={post.title}
-          datetime={post.datetime}
-          user={post.user.username}
-          image={post.image}
-        />
-      ))}
+      {isLoading ? (
+        <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '50vh'}}>
+          <CircularProgress/>
+        </Box>
+      ) : (
+        posts.map((post) => (
+          <PostItem
+            key={post._id}
+            id={post._id}
+            title={post.title}
+            datetime={post.datetime}
+            user={post.user.username}
+            image={post.image}
+          />
+        ))
+      )}
     </Container>
   );
 };

@@ -1,6 +1,6 @@
 import {useAppDispatch, useAppSelector} from '../../app/hooks';
-import {selectOnePost} from './postsSlice';
-import {CardMedia, Container, styled, Typography} from '@mui/material';
+import {selectOneFetching, selectOnePost} from './postsSlice';
+import {Box, CardMedia, CircularProgress, Container, styled, Typography} from '@mui/material';
 import {apiURL} from '../../constants';
 import dayjs from 'dayjs';
 import {useParams} from 'react-router-dom';
@@ -20,6 +20,7 @@ const FullPostPage = () => {
   const {id} = useParams() as { id: string };
   const comments = useAppSelector(selectComments);
   const user = useAppSelector(selectUser);
+  const oneFetching = useAppSelector(selectOneFetching);
 
   useEffect(() => {
     dispatch(fetchOnePost(id));
@@ -49,37 +50,45 @@ const FullPostPage = () => {
 
   return (
     <Container maxWidth="lg" sx={{mt: 2}}>
-      {cardImage && (
-        <ImageCardMedia image={cardImage}/>
-      )}
-      <Typography variant="h4" component="h1" sx={{mt: 2, mb: 1}}>
-        {onePost?.title}
-      </Typography>
-      <Typography variant="body2" color="textSecondary">
-        {dayjs(onePost?.datetime).format('DD.MM.YYYY HH:mm:ss')}
-      </Typography>
-      <Typography variant="body1" sx={{mt: 2, mb: 1}}>
-        {onePost?.description}
-      </Typography>
-      <Typography variant="subtitle2" component="div" sx={{color: 'text.secondary', textAlign: 'right'}}>
-        by {onePost?.user.username}
-      </Typography>
-      {comments.map((comment) => (
-        <OneComment
-          key={comment._id}
-          user={comment.user.username}
-          content={comment.content}
-        />
-      ))}
-      {user ? (
-        <CommentForm onSubmit={onFormSubmit} isLoading={false}/>
+      {oneFetching ? (
+        <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '50vh'}}>
+          <CircularProgress/>
+        </Box>
       ) : (
-        <Typography
-          variant="body2"
-          sx={{color: grey[500], mt: 3, textAlign: 'center', mb: 3}}
-        >
-          You should be logged in to add the comment.
-        </Typography>
+        <>
+          {cardImage && (
+            <ImageCardMedia image={cardImage}/>
+          )}
+          <Typography variant="h4" component="h1" sx={{mt: 2, mb: 1}}>
+            {onePost?.title}
+          </Typography>
+          <Typography variant="body2" color="textSecondary">
+            {dayjs(onePost?.datetime).format('DD.MM.YYYY HH:mm:ss')}
+          </Typography>
+          <Typography variant="body1" sx={{mt: 2, mb: 1}}>
+            {onePost?.description}
+          </Typography>
+          <Typography variant="subtitle2" component="div" sx={{color: 'text.secondary', textAlign: 'right'}}>
+            by {onePost?.user.username}
+          </Typography>
+          {comments.map((comment) => (
+            <OneComment
+              key={comment._id}
+              user={comment.user.username}
+              content={comment.content}
+            />
+          ))}
+          {user ? (
+            <CommentForm onSubmit={onFormSubmit} isLoading={false}/>
+          ) : (
+            <Typography
+              variant="body2"
+              sx={{color: grey[500], mt: 3, textAlign: 'center', mb: 3}}
+            >
+              You should be logged in to add the comment.
+            </Typography>
+          )}
+        </>
       )}
     </Container>
   );
