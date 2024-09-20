@@ -48,3 +48,18 @@ export interface PostFields {
   description: string | null;
   image: string | null;
 }
+
+export interface CommentFields {
+  post: string;
+  content: string;
+}
+
+export interface CommentCredentials {
+  _id: string;
+  "user": {
+    _id: string;
+    username: string;
+  },
+  "post": string;
+  "content": string;
+}
