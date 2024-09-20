@@ -29,3 +29,23 @@ export interface ValidationError {
 export interface GlobalError {
   error: string;
 }
+
+export interface PostCredentials {
+  _id: string;
+  "user": {
+    "_id": string;
+    "username": string;
+  },
+  "title": string;
+  "datetime": string;
+  "description": string | null;
+  "image": string | null;
+}
+
+export interface PostFields {
+  user: string;
+  title: string;
+  datetime: string;
+  description: string | null;
+  image: string | null;
+}
