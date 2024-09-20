@@ -11,16 +11,18 @@ const Posts = () => {
 
   useEffect(() => {
     dispatch(fetchAllPosts());
-  }, [dispatch])
+  }, [dispatch]);
 
   return (
     <Container maxWidth="sm" sx={{mt: 5}}>
       {posts.map((post) => (
-        <PostItem key={post._id}
-              title={post.title}
-              datetime={post.datetime}
-              user={post.user.username}
-              image={post.image}
+        <PostItem
+          key={post._id}
+          id={post._id}
+          title={post.title}
+          datetime={post.datetime}
+          user={post.user.username}
+          image={post.image}
         />
       ))}
     </Container>
