@@ -44,28 +44,21 @@ postsRouter.get('/', async (req, res, next) => {
   }
 });
 
-postsRouter.get('/:id', auth, async (req: RequestWithUser, res, next) => {
+postsRouter.get('/:id',  async (req, res, next) => {
   try {
-    if (!req.user) {
-      return res.status(401).send({error: 'User not found'});
-    }
 
     if (!mongoose.isValidObjectId(req.params.id)) {
-      return res.status(400).send({ error: 'Post ID is not valid' });
+      return res.status(400).send({ error: 'PostItem ID is not valid' });
     }
 
     const post = await Post.findById(req.params.id).populate('user', 'username');
 
     if (post === null) {
-      return res.status(404).send({error: 'Post not found'});
+      return res.status(404).send({error: 'PostItem not found'});
     }
 
     return res.send(post);
   } catch (error) {
-    if (error instanceof mongoose.Error.ValidationError) {
-      return res.status(400).send(error);
-    }
-
     return next(error);
   }
 });
