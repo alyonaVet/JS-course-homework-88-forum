@@ -45,7 +45,6 @@ export interface PostCredentials {
 export interface PostFields {
   user: string;
   title: string;
-  datetime: string;
   description: string | null;
   image: string | null;
 }
