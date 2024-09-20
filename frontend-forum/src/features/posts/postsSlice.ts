@@ -1,6 +1,6 @@
 import {PostCredentials} from '../../types';
 import {createSlice} from '@reduxjs/toolkit';
-import {fetchAllPosts} from './postsThunk';
+import {addPost, fetchAllPosts} from './postsThunk';
 
 export interface PostState {
   posts: PostCredentials[];
@@ -10,7 +10,7 @@ export interface PostState {
 const initialState: PostState = {
   posts: [],
   postsLoading: false,
-}
+};
 
 export const postsSlice = createSlice({
   name: 'posts',
@@ -28,10 +28,20 @@ export const postsSlice = createSlice({
       .addCase(fetchAllPosts.rejected, (state) => {
         state.postsLoading = false;
       });
+    builder
+      .addCase(addPost.pending, (state) => {
+        state.postsLoading = true;
+      })
+      .addCase(addPost.fulfilled, (state) => {
+        state.postsLoading = false;
+      })
+      .addCase(addPost.rejected, (state) => {
+        state.postsLoading = false;
+      });
   },
   selectors: {
     selectPosts: (state) => state.posts,
-    selectPostsLoading: (state) => state.postsLoading
+    selectPostsLoading: (state) => state.postsLoading,
   }
 });
 
