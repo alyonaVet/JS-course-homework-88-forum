@@ -26,5 +26,4 @@ export interface CommentFields {
   user: string;
   post: string;
   content: string;
-  createdAt: Date;
 }
