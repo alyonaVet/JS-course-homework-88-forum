@@ -45,7 +45,7 @@ export const fetchAllPosts = createAsyncThunk<PostCredentials[], void>(
 );
 
 export const fetchOnePost = createAsyncThunk<PostCredentials, string>(
-  'products/fetchOne',
+  'posts/fetchOne',
   async (id) => {
     const {data: post} = await axiosApi.get<PostCredentials>(`/posts/${id}`);
     return post;
