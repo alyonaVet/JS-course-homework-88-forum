@@ -4,7 +4,6 @@ import Post from './Post';
 
 const Schema = mongoose.Schema;
 
-
 const CommentSchema = new Schema({
   user: {
     type: Schema.Types.ObjectId,
@@ -27,15 +26,11 @@ const CommentSchema = new Schema({
         const post = await Post.findById(value);
         return Boolean(post);
       },
-      message: 'PostItem does not exist',
+      message: 'Post does not exist',
     }
   },
   content: {
     type: String,
-    required: true,
-  },
-  createdAt: {
-    type: Date,
     required: true,
   }
 });
