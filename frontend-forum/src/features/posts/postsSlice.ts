@@ -1,15 +1,19 @@
 import {PostCredentials} from '../../types';
 import {createSlice} from '@reduxjs/toolkit';
-import {addPost, fetchAllPosts} from './postsThunk';
+import {addPost, fetchAllPosts, fetchOnePost} from './postsThunk';
 
 export interface PostState {
   posts: PostCredentials[];
   postsLoading: boolean;
+  onePost: PostCredentials | null;
+  oneFetching: boolean;
 }
 
 const initialState: PostState = {
   posts: [],
   postsLoading: false,
+  onePost: null,
+  oneFetching: false,
 };
 
 export const postsSlice = createSlice({
@@ -38,10 +42,24 @@ export const postsSlice = createSlice({
       .addCase(addPost.rejected, (state) => {
         state.postsLoading = false;
       });
+    builder
+      .addCase(fetchOnePost.pending, (state) => {
+        state.onePost = null;
+        state.oneFetching = true;
+      })
+      .addCase(fetchOnePost.fulfilled, (state, { payload: onePost }) => {
+        state.onePost = onePost;
+        state.oneFetching = false;
+      })
+      .addCase(fetchOnePost.rejected, (state) => {
+        state.oneFetching = false;
+      });
   },
   selectors: {
     selectPosts: (state) => state.posts,
     selectPostsLoading: (state) => state.postsLoading,
+    selectOnePost: (state) => state.onePost,
+    selectOneFetching: (state) => state.oneFetching,
   }
 });
 
@@ -50,4 +68,6 @@ export const postsReducer = postsSlice.reducer;
 export const {
   selectPosts,
   selectPostsLoading,
+  selectOnePost,
+  selectOneFetching,
 } = postsSlice.selectors;
