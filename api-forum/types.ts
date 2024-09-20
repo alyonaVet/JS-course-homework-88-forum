@@ -20,3 +20,11 @@ export interface PostFields {
   description: string | null;
   image: string | null;
 }
+
+
+export interface CommentFields {
+  user: string;
+  post: string;
+  content: string;
+  createdAt: Date;
+}
