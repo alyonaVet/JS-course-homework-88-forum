@@ -6,13 +6,14 @@ import {Link as RouterLink} from 'react-router-dom';
 import ForumOutlinedIcon from '@mui/icons-material/ForumOutlined';
 
 interface Props {
+  id: string;
   user: string;
   title: string;
   datetime: string;
   image: string | null;
 }
 
-const PostItem: React.FC<Props> = ({user, title, image, datetime}) => {
+const PostItem: React.FC<Props> = ({id, user, title, image, datetime}) => {
   const ImageCardMedia = styled(CardMedia)({
     width: 230,
     objectFit: 'cover',
@@ -57,7 +58,7 @@ const PostItem: React.FC<Props> = ({user, title, image, datetime}) => {
                 by {user}
               </Typography>
             </Stack>
-            <Link component={RouterLink} to={'/posts/:postId'} variant="h6" noWrap ml={3}>
+            <Link component={RouterLink} to={`/posts/${id}`} variant="h6" noWrap ml={3}>
               {title}
             </Link>
           </CardContent>
