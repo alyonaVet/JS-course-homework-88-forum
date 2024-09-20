@@ -1,5 +1,5 @@
 import express from 'express';
-import mongoose, {Types} from 'mongoose';
+import mongoose from 'mongoose';
 import {CommentFields} from '../types';
 import Comment from '../models/Comment';
 import auth, {RequestWithUser} from '../middleware/auth';
