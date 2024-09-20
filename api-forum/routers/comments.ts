@@ -1,12 +1,12 @@
-import express from "express";
-import mongoose from 'mongoose';
+import express from 'express';
+import mongoose, {Types} from 'mongoose';
 import {CommentFields} from '../types';
 import Comment from '../models/Comment';
 import auth, {RequestWithUser} from '../middleware/auth';
 
 const commentsRouter = express.Router();
 
-commentsRouter.post("/", auth, async (req: RequestWithUser, res, next) => {
+commentsRouter.post('/', auth, async (req: RequestWithUser, res, next) => {
   try {
     if (!req.user) {
       return res.status(401).send({error: 'User not found'});
@@ -16,7 +16,6 @@ commentsRouter.post("/", auth, async (req: RequestWithUser, res, next) => {
       user: req.user._id.toString(),
       post: req.body.post,
       content: req.body.content,
-      createdAt: new Date(),
     };
 
     const comment = new Comment(commentData);
@@ -30,5 +29,21 @@ commentsRouter.post("/", auth, async (req: RequestWithUser, res, next) => {
     return next(error);
   }
 });
+
+commentsRouter.get('/', async (req, res, next) => {
+  try {
+    const {postId} = req.query;
+
+    const postFilter = postId ? {post: postId} : {};
+
+    const comments = await Comment.find(postFilter).populate('user', 'username');
+
+    return res.send(comments);
+
+  } catch (error) {
+    return next(error);
+  }
+});
+
 
 export default commentsRouter;
