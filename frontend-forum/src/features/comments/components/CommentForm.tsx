@@ -50,11 +50,12 @@ const AddCommentForm: React.FC<Props> = ({onSubmit, isLoading}) => {
           name="content"
           value={commentData.content}
           onChange={onFieldChange}
+          required
           fullWidth
         />
         <LoadingButton
           type="submit"
-          loading={isLoading}
+          disabled={isLoading}
           loadingPosition="center"
           variant="contained"
         >

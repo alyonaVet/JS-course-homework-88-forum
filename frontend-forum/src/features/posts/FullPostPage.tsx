@@ -7,7 +7,7 @@ import {useParams} from 'react-router-dom';
 import {useEffect} from 'react';
 import {fetchOnePost} from './postsThunk';
 import {addComment, fetchComments} from '../comments/CommentThunk';
-import {selectComments} from '../comments/CommentSlice';
+import {selectCommentLoading, selectComments} from '../comments/CommentSlice';
 import OneComment from '../comments/components/OneComment';
 import CommentForm from '../comments/components/CommentForm';
 import {CommentFields} from '../../types';
@@ -21,6 +21,7 @@ const FullPostPage = () => {
   const comments = useAppSelector(selectComments);
   const user = useAppSelector(selectUser);
   const oneFetching = useAppSelector(selectOneFetching);
+  const commentsLoading = useAppSelector(selectCommentLoading);
 
   useEffect(() => {
     dispatch(fetchOnePost(id));
@@ -79,7 +80,7 @@ const FullPostPage = () => {
             />
           ))}
           {user ? (
-            <CommentForm onSubmit={onFormSubmit} isLoading={false}/>
+            <CommentForm onSubmit={onFormSubmit} isLoading={commentsLoading}/>
           ) : (
             <Typography
               variant="body2"
